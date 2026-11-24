@@ -1,0 +1,21 @@
+name: apulse
+
+services:
+  web:
+    container_name: apulse-web
+    image: apulse-web:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL}
+    ports:
+      - '${PORT:-3000}:3000'
+    restart: unless-stopped
+    networks:
+      - apulse-network
+
+networks:
+  apulse-network:
+    name: apulse-network
+    driver: bridge
