@@ -12,7 +12,8 @@ export const PermissionCode = Object.freeze({
   EMPLOYEES: 'employees',
 });
 
-export type PermissionCode = (typeof PermissionCode)[keyof typeof PermissionCode];
+export type PermissionCode =
+  (typeof PermissionCode)[keyof typeof PermissionCode];
 
 export interface Permission {
   id: string;

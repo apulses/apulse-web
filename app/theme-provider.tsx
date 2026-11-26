@@ -42,7 +42,11 @@ function getServerThemeSnapshot(): ThemeMode {
 }
 
 export function AppThemeProvider({ children }: { children: ReactNode }) {
-  const mode = useSyncExternalStore(subscribeToTheme, getThemeSnapshot, getServerThemeSnapshot);
+  const mode = useSyncExternalStore(
+    subscribeToTheme,
+    getThemeSnapshot,
+    getServerThemeSnapshot,
+  );
 
   const setTheme = useCallback((newMode: ThemeMode) => {
     localStorage.setItem(THEME_STORAGE_KEY, newMode);

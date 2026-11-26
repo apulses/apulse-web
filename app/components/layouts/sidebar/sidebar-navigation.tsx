@@ -1,6 +1,12 @@
 'use client';
 
-import { List, ListItemButton, ListItemIcon, ListItemText, Tooltip } from '@mui/material';
+import {
+  List,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  Tooltip,
+} from '@mui/material';
 
 import {
   DashboardOutlined,
@@ -26,7 +32,8 @@ interface SidebarNavigationProps {
   onNavigate?: () => void;
 }
 
-type SidebarIcon = 'dashboard' | 'users' | 'package' | 'shopping-cart' | 'chart';
+type SidebarIcon =
+  'dashboard' | 'users' | 'package' | 'shopping-cart' | 'chart';
 
 interface SidebarNavigationItem {
   label: string;
@@ -38,7 +45,10 @@ export const sidebarNavigation: SidebarNavigationItem[] = [
   { label: 'test', path: '/test', icon: 'dashboard' },
 ];
 
-export function SidebarNavigation({ collapsed, onNavigate }: SidebarNavigationProps) {
+export function SidebarNavigation({
+  collapsed,
+  onNavigate,
+}: SidebarNavigationProps) {
   const navigate = useNavigate();
   const { pathname } = useLocation();
 

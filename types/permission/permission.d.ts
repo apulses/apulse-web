@@ -12,7 +12,8 @@ export declare const PermissionCode: {
   readonly EMPLOYEES: 'employees';
 };
 
-export type PermissionCode = (typeof PermissionCode)[keyof typeof PermissionCode];
+export type PermissionCode =
+  (typeof PermissionCode)[keyof typeof PermissionCode];
 
 export interface Permission {
   id: string;

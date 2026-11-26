@@ -9,22 +9,14 @@ import {
   useEffect,
   useRef,
   useState,
-  type ReactNode
+  type ReactNode,
 } from 'react';
 import { authService } from '@/services/auth.service';
-import {
-  getAccessToken,
-  setAuthTokens
-} from '@/lib/api-client';
+import { getAccessToken, setAuthTokens } from '@/lib/api-client';
 
-export type SessionResolver =
-  () => Promise<AuthenticatedUser | null>;
+export type SessionResolver = () => Promise<AuthenticatedUser | null>;
 
-type AuthStatus =
-  | 'loading'
-  | 'authenticated'
-  | 'unauthenticated'
-  | 'error';
+type AuthStatus = 'loading' | 'authenticated' | 'unauthenticated' | 'error';
 
 interface AuthState {
   status: AuthStatus;
@@ -43,38 +35,33 @@ interface AuthProviderProps {
   resolveSession?: SessionResolver;
 }
 
-const resolveStoredSession: SessionResolver =
-  async () => {
-    if (!getAccessToken()) {
+const resolveStoredSession: SessionResolver = async () => {
+  if (!getAccessToken()) {
+    return null;
+  }
+
+  try {
+    return await authService.getCurrentUser();
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response?.status === 401) {
+      setAuthTokens(null);
       return null;
     }
 
-    try {
-      return await authService.getCurrentUser();
-    } catch (error) {
-      if (
-        axios.isAxiosError(error) &&
-        error.response?.status === 401
-      ) {
-        setAuthTokens(null);
-        return null;
-      }
+    throw error;
+  }
+};
 
-      throw error;
-    }
-  };
-
-const AuthContext =
-  createContext<AuthContextValue | null>(null);
+const AuthContext = createContext<AuthContextValue | null>(null);
 
 export function AuthProvider({
   children,
-  resolveSession = resolveStoredSession
+  resolveSession = resolveStoredSession,
 }: AuthProviderProps) {
   const [state, setState] = useState<AuthState>({
     status: 'loading',
     user: null,
-    error: null
+    error: null,
   });
 
   // requestId prevents stale responses from a previous check overwriting a newer one.
@@ -88,11 +75,9 @@ export function AuthProvider({
           (user) => {
             if (request === requestId.current) {
               setState({
-                status: user
-                  ? 'authenticated'
-                  : 'unauthenticated',
+                status: user ? 'authenticated' : 'unauthenticated',
                 user,
-                error: null
+                error: null,
               });
             }
           },
@@ -104,15 +89,13 @@ export function AuthProvider({
                 error:
                   error instanceof Error
                     ? error
-                    : new Error(
-                        'Session check failed'
-                      )
+                    : new Error('Session check failed'),
               });
             }
-          }
+          },
         );
     },
-    [resolveSession]
+    [resolveSession],
   );
 
   const retrySessionCheck = useCallback(() => {
@@ -120,7 +103,7 @@ export function AuthProvider({
     setState({
       status: 'loading',
       user: null,
-      error: null
+      error: null,
     });
     checkSession(request);
   }, [checkSession]);
@@ -134,17 +117,14 @@ export function AuthProvider({
     };
   }, [checkSession]);
 
-  const signIn = useCallback(
-    (user: AuthenticatedUser) => {
-      requestId.current += 1;
-      setState({
-        status: 'authenticated',
-        user,
-        error: null
-      });
-    },
-    []
-  );
+  const signIn = useCallback((user: AuthenticatedUser) => {
+    requestId.current += 1;
+    setState({
+      status: 'authenticated',
+      user,
+      error: null,
+    });
+  }, []);
 
   const signOut = useCallback(() => {
     requestId.current += 1;
@@ -152,7 +132,7 @@ export function AuthProvider({
     setState({
       status: 'unauthenticated',
       user: null,
-      error: null
+      error: null,
     });
   }, []);
 
@@ -162,7 +142,7 @@ export function AuthProvider({
         ...state,
         signIn,
         signOut,
-        retrySessionCheck
+        retrySessionCheck,
       }}
     >
       {children}
@@ -173,9 +153,7 @@ export function AuthProvider({
 export function useAuth(): AuthContextValue {
   const context = useContext(AuthContext);
   if (!context) {
-    throw new Error(
-      'useAuth must be used within an AuthProvider'
-    );
+    throw new Error('useAuth must be used within an AuthProvider');
   }
   return context;
 }

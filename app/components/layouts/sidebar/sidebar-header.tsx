@@ -10,7 +10,10 @@ interface SidebarHeaderProps {
   onToggleCollapse: () => void;
 }
 
-export function SidebarHeader({ collapsed, onToggleCollapse }: SidebarHeaderProps) {
+export function SidebarHeader({
+  collapsed,
+  onToggleCollapse,
+}: SidebarHeaderProps) {
   return (
     <Box
       sx={{

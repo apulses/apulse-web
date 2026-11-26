@@ -86,7 +86,10 @@ function PasswordField({ register, error }: PasswordFieldProps) {
       fullWidth
       required
       error={!!error}
-      helperText={error ?? 'At least 8 characters, including uppercase, lowercase, and a number.'}
+      helperText={
+        error ??
+        'At least 8 characters, including uppercase, lowercase, and a number.'
+      }
       slotProps={{
         input: {
           endAdornment: (
@@ -245,7 +248,11 @@ export default function RegisterPage() {
               )}
 
               {/* Registration Form */}
-              <Box component="form" onSubmit={handleSubmit(onSubmit)} noValidate>
+              <Box
+                component="form"
+                onSubmit={handleSubmit(onSubmit)}
+                noValidate
+              >
                 <Stack spacing={2.5}>
                   <RegistrationFields register={register} errors={errors} />
 
@@ -261,7 +268,9 @@ export default function RegisterPage() {
                       textTransform: 'none',
                     }}
                   >
-                    {registerMutation.isPending ? 'Creating account...' : 'Create account'}
+                    {registerMutation.isPending
+                      ? 'Creating account...'
+                      : 'Create account'}
                   </Button>
                 </Stack>
               </Box>

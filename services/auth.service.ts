@@ -1,6 +1,10 @@
 import { apiClient } from '@/lib/api-client';
 import { AuthenticatedUser } from '@/types';
-import type { LoginPayload, RegisterPayload, TokenPair } from '@/types/auth.type';
+import type {
+  LoginPayload,
+  RegisterPayload,
+  TokenPair,
+} from '@/types/auth.type';
 
 export const authService = {
   async register(payload: RegisterPayload): Promise<TokenPair> {

@@ -31,7 +31,9 @@ export function Providers({ children }: ProvidersProps) {
         <CssBaseline />
         <AuthProvider>{children}</AuthProvider>
       </AppThemeProvider>
-      {process.env.NODE_ENV === 'development' && <ReactQueryDevtools initialIsOpen={false} />}
+      {process.env.NODE_ENV === 'development' && (
+        <ReactQueryDevtools initialIsOpen={false} />
+      )}
     </QueryClientProvider>
   );
 }

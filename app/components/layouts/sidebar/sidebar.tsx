@@ -28,9 +28,15 @@ export function Sidebar({
 
   const drawerContent = (
     <>
-      <SidebarHeader collapsed={collapsed} onToggleCollapse={onToggleCollapse} />
+      <SidebarHeader
+        collapsed={collapsed}
+        onToggleCollapse={onToggleCollapse}
+      />
 
-      <SidebarNavigation collapsed={collapsed} onNavigate={isMobile ? onMobileClose : undefined} />
+      <SidebarNavigation
+        collapsed={collapsed}
+        onNavigate={isMobile ? onMobileClose : undefined}
+      />
 
       <SidebarWorkspaces
         collapsed={collapsed}
