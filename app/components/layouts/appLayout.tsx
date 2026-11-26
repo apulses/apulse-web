@@ -16,7 +16,9 @@ export function AppLayout({ sideBarOpen = true }) {
 
   // Populate these from the authenticated user's accessible workspaces.
   const [workspaces] = useState<Workspace[]>([]);
-  const [selectedWorkspaceId, setSelectedWorkspaceId] = useState<string | undefined>();
+  const [selectedWorkspaceId, setSelectedWorkspaceId] = useState<
+    string | undefined
+  >();
 
   const handleWorkspaceChange = (workspace: Workspace) => {
     setSelectedWorkspaceId(workspace.id);

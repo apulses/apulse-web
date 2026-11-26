@@ -1,7 +1,18 @@
 'use client';
 
-import { BrowserRouter, Navigate, Outlet, Route, Routes, useLocation } from 'react-router-dom';
-import { AuthProvider, type SessionResolver, useAuth } from '@/context/AuthContext';
+import {
+  BrowserRouter,
+  Navigate,
+  Outlet,
+  Route,
+  Routes,
+  useLocation,
+} from 'react-router-dom';
+import {
+  AuthProvider,
+  type SessionResolver,
+  useAuth,
+} from '@/context/AuthContext';
 import { LoadingState, AppLayout } from '@/app/components';
 import RegisterPage from '@/app/pages/auth/register/register.page';
 import LoginPage from '@/app/pages/auth/login/login.page';

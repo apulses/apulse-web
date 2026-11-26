@@ -7,7 +7,7 @@ import {
   IconButton,
   Toolbar,
   Tooltip,
-  Typography
+  Typography,
 } from '@mui/material';
 
 import { SettingsOutlined } from '@mui/icons-material';
@@ -24,20 +24,13 @@ interface NavbarProps {
   onProfileClick?: () => void;
 }
 
-export function Navbar({
-  onSettingsClick,
-  user
-}: NavbarProps) {
+export function Navbar({ onSettingsClick, user }: NavbarProps) {
   const navigate = useNavigate();
 
-  const navigateProfile = () =>
-    navigate('/profile');
+  const navigateProfile = () => navigate('/profile');
   const navigateLogin = () => navigate('/login');
 
-  const {
-    mutate: logout,
-    isPending: isLoggingOut
-  } = useLogout();
+  const { mutate: logout, isPending: isLoggingOut } = useLogout();
   return (
     <AppBar
       position="static"
@@ -45,10 +38,7 @@ export function Navbar({
       color="transparent"
       sx={componentStyles.navbar}
     >
-      <Toolbar
-        disableGutters
-        sx={componentStyles.navbarToolbar}
-      >
+      <Toolbar disableGutters sx={componentStyles.navbarToolbar}>
         {/* Branding */}
         <Typography
           component="a"
@@ -68,9 +58,7 @@ export function Navbar({
               <Tooltip title="Settings">
                 <IconButton
                   onClick={onSettingsClick}
-                  sx={
-                    componentStyles.actionButton
-                  }
+                  sx={componentStyles.actionButton}
                   aria-label="Settings"
                   size="medium"
                 >
@@ -79,26 +67,15 @@ export function Navbar({
               </Tooltip>
               <Tooltip title={user.name}>
                 <Button onClick={navigateProfile}>
-                  <AvatarProfile
-                    imageKey={user.avatar}
-                    name={user.name}
-                  />
+                  <AvatarProfile imageKey={user.avatar} name={user.name} />
                 </Button>
               </Tooltip>
-              <Button
-                onClick={() => logout()}
-                disabled={isLoggingOut}
-              >
-                {isLoggingOut
-                  ? 'Signing out...'
-                  : 'Logout'}
+              <Button onClick={() => logout()} disabled={isLoggingOut}>
+                {isLoggingOut ? 'Signing out...' : 'Logout'}
               </Button>
             </>
           ) : (
-            <Button
-              variant="contained"
-              onClick={navigateLogin}
-            >
+            <Button variant="contained" onClick={navigateLogin}>
               Login
             </Button>
           )}

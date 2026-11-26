@@ -1,8 +1,4 @@
-import {
-  AuthenticatedUser,
-  PermissionCode,
-  RoleCode
-} from '@/types';
+import { AuthenticatedUser, PermissionCode, RoleCode } from '@/types';
 
 /**
  * Checks whether an authenticated user has access to a specific domain or module.
@@ -13,7 +9,7 @@ import {
  */
 export function canAccessDomain(
   user: AuthenticatedUser | null | undefined,
-  domain: PermissionCode
+  domain: PermissionCode,
 ): boolean {
   if (!user) {
     return false;
@@ -23,9 +19,7 @@ export function canAccessDomain(
     return true;
   }
 
-  return Boolean(
-    user.permissions?.includes(domain)
-  );
+  return Boolean(user.permissions?.includes(domain));
 }
 
 /**
@@ -33,7 +27,7 @@ export function canAccessDomain(
  */
 export function canAccessAnyDomain(
   user: AuthenticatedUser | null | undefined,
-  domains: readonly PermissionCode[]
+  domains: readonly PermissionCode[],
 ): boolean {
   if (!user) {
     return false;
@@ -44,21 +38,15 @@ export function canAccessAnyDomain(
   }
 
   const userPermissions = user.permissions ?? [];
-  return domains.some((domain) =>
-    userPermissions.includes(domain)
-  );
+  return domains.some((domain) => userPermissions.includes(domain));
 }
 
 /**
  * Filters a list of UI tabs or navigation modules based on the user's domain permissions.
  */
-export function filterVisibleModules<
-  T extends { permission: PermissionCode }
->(
+export function filterVisibleModules<T extends { permission: PermissionCode }>(
   modules: readonly T[],
-  user: AuthenticatedUser | null | undefined
+  user: AuthenticatedUser | null | undefined,
 ): T[] {
-  return modules.filter((mod) =>
-    canAccessDomain(user, mod.permission)
-  );
+  return modules.filter((mod) => canAccessDomain(user, mod.permission));
 }

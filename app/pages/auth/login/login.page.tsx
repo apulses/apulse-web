@@ -29,7 +29,10 @@ import { useAuth } from '@/context/AuthContext';
 import { componentStyles } from '@/app/styles/components';
 
 const loginSchema = z.object({
-  email: z.string().min(1, 'Email is required').email('Enter a valid email address'),
+  email: z
+    .string()
+    .min(1, 'Email is required')
+    .email('Enter a valid email address'),
   password: z.string().min(1, 'Password is required'),
 });
 
@@ -43,7 +46,8 @@ export default function LoginPage() {
   const location = useLocation();
 
   const destination =
-    (location.state as { from?: { pathname?: string } } | null)?.from?.pathname ?? '/dashboard';
+    (location.state as { from?: { pathname?: string } } | null)?.from
+      ?.pathname ?? '/dashboard';
 
   const {
     register,
@@ -124,7 +128,9 @@ export default function LoginPage() {
             </Typography>
           </Box>
 
-          {loginMutation.isError && <Alert severity="error">{errorMessage}</Alert>}
+          {loginMutation.isError && (
+            <Alert severity="error">{errorMessage}</Alert>
+          )}
 
           <Box component="form" onSubmit={handleSubmit(onSubmit)} noValidate>
             <Stack spacing={2.5}>
@@ -154,8 +160,12 @@ export default function LoginPage() {
                     endAdornment: (
                       <InputAdornment position="end">
                         <IconButton
-                          aria-label={showPassword ? 'Hide password' : 'Show password'}
-                          onClick={() => setShowPassword((previous) => !previous)}
+                          aria-label={
+                            showPassword ? 'Hide password' : 'Show password'
+                          }
+                          onClick={() =>
+                            setShowPassword((previous) => !previous)
+                          }
                           edge="end"
                           sx={componentStyles.actionButton}
                         >

@@ -32,7 +32,9 @@ export function SidebarWorkspaces({
 }: SidebarWorkspacesProps) {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
 
-  const selectedWorkspace = workspaces.find((workspace) => workspace.id === selectedWorkspaceId);
+  const selectedWorkspace = workspaces.find(
+    (workspace) => workspace.id === selectedWorkspaceId,
+  );
 
   const hasWorkspaces = workspaces.length > 0;
   const menuOpen = Boolean(anchorEl);
@@ -84,13 +86,17 @@ export function SidebarWorkspaces({
           >
             <WorkspacesOutlined fontSize="small" />
 
-            {!collapsed && <Typography variant="body2">No workspaces available</Typography>}
+            {!collapsed && (
+              <Typography variant="body2">No workspaces available</Typography>
+            )}
           </Box>
         </Tooltip>
       ) : (
         <>
           <Tooltip
-            title={collapsed ? (selectedWorkspace?.name ?? 'Select workspace') : ''}
+            title={
+              collapsed ? (selectedWorkspace?.name ?? 'Select workspace') : ''
+            }
             placement="right"
             disableHoverListener={!collapsed}
           >
@@ -124,7 +130,11 @@ export function SidebarWorkspaces({
                     </Typography>
 
                     {selectedWorkspace?.description && (
-                      <Typography variant="caption" color="text.secondary" noWrap>
+                      <Typography
+                        variant="caption"
+                        color="text.secondary"
+                        noWrap
+                      >
                         {selectedWorkspace.description}
                       </Typography>
                     )}
